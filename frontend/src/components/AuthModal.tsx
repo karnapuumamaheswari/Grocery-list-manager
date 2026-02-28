@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, Eye, EyeOff, Loader2 } from "lucide-react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -16,6 +16,7 @@ export function AuthModal({ isOpen, onClose, onSubmit, isLoading, error }: AuthM
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -56,15 +57,25 @@ export function AuthModal({ isOpen, onClose, onSubmit, isLoading, error }: AuthM
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Password</label>
-            <Input
-              type="password"
-              placeholder={isSignUp ? "Create a strong password" : "Enter your password"}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              required
-              disabled={isLoading}
-              className="rounded-xl"
-            />
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder={isSignUp ? "Create a strong password" : "Enter your password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+                disabled={isLoading}
+                className="rounded-xl pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
 
           {isSignUp ? (

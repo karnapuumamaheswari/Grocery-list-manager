@@ -14,6 +14,8 @@ import {
   Plus,
   RefreshCw,
   Search,
+  Eye,
+  EyeOff,
   Share2,
   ShoppingCart,
   Sparkles,
@@ -481,6 +483,8 @@ export default function Index() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
@@ -1825,21 +1829,51 @@ export default function Index() {
                   required
                 />
                 <Input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   required
                 />
+                <button
+                  type="button"
+                  className="mt-1 text-xs text-primary hover:underline"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? (
+                    <span className="inline-flex items-center gap-1">
+                      <EyeOff className="h-3.5 w-3.5" /> Hide password
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1">
+                      <Eye className="h-3.5 w-3.5" /> Show password
+                    </span>
+                  )}
+                </button>
                 {!isLogin ? (
                   <>
                     <Input
-                      type="password"
+                      type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm password"
                       value={confirmPassword}
                       onChange={(event) => setConfirmPassword(event.target.value)}
                       required
                     />
+                    <button
+                      type="button"
+                      className="mt-1 text-xs text-primary hover:underline"
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                    >
+                      {showConfirmPassword ? (
+                        <span className="inline-flex items-center gap-1">
+                          <EyeOff className="h-3.5 w-3.5" /> Hide confirm password
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1">
+                          <Eye className="h-3.5 w-3.5" /> Show confirm password
+                        </span>
+                      )}
+                    </button>
                     <label className="flex items-start gap-2 rounded-lg border border-border/60 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
                       <input
                         type="checkbox"
